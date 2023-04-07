@@ -1,0 +1,75 @@
+create Database [Diplom]
+ go
+ use [Diplom]
+ go
+ CREATE TABLE [Product] (
+	Artikul int NOT NULL,
+	NameProduct varchar(255) NOT NULL,
+	Provider varchar(255) not null,
+	DateOfDelivery date NOT NULL,
+	ExpirationDate date NOT NULL,
+	quantity int NOT NULL,
+	UnitProduct varchar(5) NOT NULL,
+  CONSTRAINT [PK_PRODUCT] PRIMARY KEY CLUSTERED
+  (
+  [Artikul] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+
+)
+GO
+CREATE TABLE [ActionProduct] (
+	artikul int NOT NULL,
+	Name varchar(255) NOT NULL,
+	Provide varchar(255) not null,
+	ProductQuantity int NOT NULL,
+	ProductUnit varchar(5) NOT NULL,
+	DateAction date NOT NULL,
+	StatusProduct varchar(7),
+  CONSTRAINT [PK_ISSUED] PRIMARY KEY CLUSTERED
+  (
+  [artikul] ASC 
+  ) WITH (IGNORE_DUP_KEY = OFF)
+)
+GO
+Create Table [Status](
+status varchar(7) not null,
+ CONSTRAINT [PK_Status] PRIMARY KEY CLUSTERED
+  (
+  [status] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+)
+go
+Create Table [Unit](
+unit varchar(5) not null,
+CONSTRAINT [PK_Unit] PRIMARY KEY CLUSTERED
+  (
+  [unit] ASC
+  ) WITH (IGNORE_DUP_KEY = OFF)
+)
+go
+Create Table [Providers](
+[ProvidersName] varchar(255) not null primary key,
+[Adress] varchar(255) not null
+)
+go
+ALTER TABLE [ActionProduct] WITH CHECK ADD CONSTRAINT [Product_fk0] FOREIGN KEY ([artikul]) REFERENCES [Product]([Artikul])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [ActionProduct] CHECK CONSTRAINT [Product_fk0]
+GO
+ALTER TABLE [ActionProduct] WITH CHECK ADD CONSTRAINT [Product_fk1] FOREIGN KEY ([StatusProduct]) REFERENCES [Status]([status])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [ActionProduct] CHECK CONSTRAINT [Product_fk1]
+GO
+ALTER TABLE [Product] WITH CHECK ADD CONSTRAINT [Product_fk2] FOREIGN KEY ([UnitProduct]) REFERENCES [Unit]([unit])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [Product] CHECK CONSTRAINT [Product_fk2]
+GO
+ALTER TABLE [Product] WITH CHECK ADD CONSTRAINT [Product_fk3] FOREIGN KEY (Provider) REFERENCES [Providers]([ProvidersName])
+ON UPDATE CASCADE
+GO
+ALTER TABLE [Product] CHECK CONSTRAINT [Product_fk3]
+GO
+
